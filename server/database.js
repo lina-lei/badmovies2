@@ -11,7 +11,7 @@ const saveFavorite = function(callback) {
   // save movie to favorites in the database
 };
 
-const deleteFavorites = function(callback) {
+const deleteFavorite = function(callback) {
   // delete a movie from favorites in the database
 };
 
