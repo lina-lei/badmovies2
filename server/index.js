@@ -31,12 +31,34 @@ app.get('/genres', function(req, res) {
   .catch((err) => console.log('server: err retrieving genres from API', err));
 });
 
-app.post('/save', function(req, res) {
+app.get('/favorites', function(req, res) {
+  getAllFavorites((err, data) => {
+    console.log('server: this is what i get back from DB', data);
+    if(err) res.send(500, 'server: err fetching favs from DB', err);
+    else res.send(200, data);
+  });
 
 });
 
-app.post('/delete', function(req, res) {
+app.post('/save', function(req, res) {
+  // console.log('server: what is save movie req.body.params', req.body.params);
+  saveFavorite(req.body.params, (err, data) => {
+    if(err) res.send(500, 'server: err saving movie into DB', err);
+    else res.send(201, 'server: successfully saved movie into DB');
+  });
+});
 
+app.post('/delete', function(req, res) {
+  console.log('wegiohwego', req.body.params);
+  deleteFavorite(req.body.params, (err, data) => {
+    if(err) res.send(500, 'server: err deleting movie from DB', err);
+    else {getAllFavorites((err, data) => {
+    console.log('server: this is what i get back from DB', data);
+    if(err) res.send(500, 'server: err fetching favs from DB', err);
+    else res.send(200, data);
+  })
+  };
+  });
 });
 
 app.listen(3000, function() {

@@ -12,6 +12,7 @@ class Movies extends React.Component {
   // You can tell which list is currently being rendered based on whether the prop "showFaves" is false (search results) or true (fave list) (within index.jsx)
 
   saveOrDelete(movie) {
+    // console.log('this is the movie that was clicked on', movie);
     if(this.props.showFaves) { //if showFaves is true, delete the movie that was clicked
       this.props.deleteMovie(movie);
     } else { //if showFaves is false, save the movie that was clicked
@@ -23,7 +24,7 @@ class Movies extends React.Component {
     return (
       <ul className="movies">
         {this.props.movies.map((movie) => (
-          <li className="movie_item">
+          <li className="movie_item" onClick={(e) => {this.saveOrDelete(movie)}}>
             <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}/>
             <div className="movie_description">
               <h2>{movie.title}</h2>

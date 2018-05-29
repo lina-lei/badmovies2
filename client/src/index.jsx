@@ -13,9 +13,14 @@ class App extends React.Component {
       showFaves: false,
     };
     this.getMovies = this.getMovies.bind(this);
+    this.getFavorites = this.getFavorites.bind(this);
     this.saveMovie = this.saveMovie.bind(this);
     this.deleteMovie = this.deleteMovie.bind(this);
     this.swapFavorites = this.swapFavorites.bind(this);
+  }
+
+  componentDidMount() {
+    this.getFavorites();
   }
 
   getMovies(genreId) {
@@ -26,12 +31,32 @@ class App extends React.Component {
     .catch((err) => console.log('client: err retrieving specific genre from API', err));
   }
 
-  saveMovie() {
-    // same as above but do something diff
+  getFavorites() {
+    axios.get('/favorites')
+    .then((data) => console.log('data', data));
   }
 
-  deleteMovie() {
+  saveMovie(movie) {
     // same as above but do something diff
+    // console.log('client: this is the movie clicked on to be saved', movie);
+    axios.post('/save', {params: {
+      id: movie.id, 
+      title: movie.title, 
+      release_date: movie.release_date,
+      vote_average: movie.vote_average, 
+      poster_path: movie.poster_path
+    }})
+    .then((data) => this.setState({favorites: [...this.state.favorites, movie]}))
+    .catch((err) => console.log('client: err saving movie', err));
+  }
+
+  deleteMovie(movie) {
+    // same as above but do something diff
+    axios.post('/delete', {params: {
+      id: movie.id
+    }})
+    .then((data) => console.log(data))
+    .catch((err) => console.log('client: err deleting movie', err));
   }
 
   swapFavorites() {
