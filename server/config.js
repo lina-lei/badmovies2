@@ -3,5 +3,5 @@ module.exports = {
   user: 'student', 
   password: 'student', 
   database: 'badmovies',
-  API_KEY: '',
+  API_KEY: 'f752b8791d18ca1568f58b8427904713',
 };
